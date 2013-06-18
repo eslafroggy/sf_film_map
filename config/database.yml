@@ -17,7 +17,7 @@ development:
   encoding: unicode
   database: sf_movies_development
   pool: 5
-  username: amy
+  username: clairepierce
   password:
   host: localhost
 
@@ -44,7 +44,7 @@ test:
   encoding: unicode
   database: sf_movies_test
   pool: 5
-  username: amy
+  username: clairepierce
   password:
   host: localhost
 
@@ -53,6 +53,6 @@ production:
   encoding: unicode
   database: sf_movies_production
   pool: 5
-  username: amy
+  username: clairepierce
   password:
   host: localhost
