@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  movie_title: MyString
+  release_year: 1
+  director: MyString
+
+two:
+  movie_title: MyString
+  release_year: 1
+  director: MyString
