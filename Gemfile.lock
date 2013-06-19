@@ -41,6 +41,7 @@ GEM
     erubis (2.7.0)
     execjs (1.4.0)
       multi_json (~> 1.0)
+    geocoder (1.1.8)
     hike (1.2.3)
     httparty (0.11.0)
       multi_json (~> 1.0)
@@ -117,6 +118,7 @@ PLATFORMS
 
 DEPENDENCIES
   coffee-rails (~> 3.2.1)
+  geocoder
   httparty
   jquery-rails
   pg
