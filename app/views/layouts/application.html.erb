@@ -9,7 +9,8 @@
   <script src="http://cdn.leafletjs.com/leaflet-0.5/leaflet.js"></script>
 </head>
 <body>
-
+<%=link_to "Movies", movies_path%>
+<%=link_to "Locations", locations_path%>
 <%= yield %>
 <%= content_for :scripts %>
 
