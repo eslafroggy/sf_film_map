@@ -1,45 +1,9 @@
 SfMovies::Application.routes.draw do
-  get "actors/index"
 
-  get "actors/new"
-
-  get "actors/create"
-
-  get "actors/edit"
-
-  get "actors/update"
-
-  get "actors/destroy"
-
-  get "actors/show"
-
-  get "locationss/index"
-
-  get "locationss/new"
-
-  get "locationss/create"
-
-  get "locationss/edit"
-
-  get "locationss/update"
-
-  get "locationss/destroy"
-
-  get "locationss/sho"
-
-  get "locationss/show"
-
-  get "movies/index"
-
-  get "movies/new"
-
-  get "movies/create"
-
-  get "movies/edit"
-
-  get "movies/update"
-
-  get "movies/destroy"
+  resources :actors
+  
+  match '/movies/show', :controller => 'movies', :action => 'show'
+  resources :movies
 
   match "/locations/map1" => "locations#map1"
   resources :locations
