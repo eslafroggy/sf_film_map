@@ -3,7 +3,6 @@
 <table>
   <tr>
     <th>Address</th>
-    <th>Fun Fact</th>
     <th>Latitude</th>
     <th>Longitude</th>
     <th></th>
@@ -14,10 +13,11 @@
 <% @locations.each do |location| %>
   <tr>
     <td><%= location.address %></td>
-    <td><%= location.fun_fact %></td>
- 
-    <td><%= link_to 'Show', locations_path %></td>
-   
+    <td><%= location.latitude %></td>
+    <td><%= location.longitude %></td>
+    <td><%= link_to 'Show', location_path(location) %></td>
+    <td><%= link_to 'Edit', edit_location_path(location) %></td>
+    <td><%= link_to 'Delete', locations_path, method: :delete, data: { confirm: 'Are you sure?' } %></td>
   </tr>
 <% end %>
 </table>

@@ -1,4 +1,5 @@
 SfMovies::Application.routes.draw do
+  match "/locations/map1" => "locations#map1"
   resources :locations
 
   # The priority is based upon order of creation:

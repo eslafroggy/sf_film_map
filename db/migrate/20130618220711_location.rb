@@ -4,6 +4,8 @@ class Location < ActiveRecord::Migration
     t.text :fun_fact
     remove_column :locations, :movie_id
     remove_column :locations, :fun_facts
-    end  
+    end
   end
+
+
 end

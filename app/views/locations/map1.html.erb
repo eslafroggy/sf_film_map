@@ -1,22 +1,12 @@
-<p id="notice"><%= notice %></p>
+<h1>Home#map1</h1>
+<p>Find me in app/views/home/map1.html.erb</p>
 
-<p>
-  <b>Address:</b>
-  <%= @location.address %>
-</p>
+<%#= gmaps({
+  "direction" => {
+    "data" => {"from" => "San Francisco, CA", "to" => "Omaha, NE"}
+  }
+}) %>
 
-<p>
-  <b>Latitude:</b>
-  <%= @location.latitude %>
-</p>
-
-<p>
-  <b>Longitude:</b>
-  <%= @location.longitude%>
-</p>
-
-<%= link_to 'Edit', edit_location_path(@location) %> |
-<%= link_to 'Back', locations_path %>
 <%= gmaps({
     "map_options" => { "type" => "SATELLITE", "center_latitude" => 0, "center_longitude" => 180, "zoom" => 3, "auto_adjust" => true},
     "markers"     => { "data" => '[{ "description": "", "title": "", "lng": "5.9311119", "lat": "43.1251606", "picture": "", "width": "", "height": "" } ,{ "description": "", "title": "", "lng": "2.3509871", "lat": "48.8566667", "picture": "", "width": "", "height": "" } ]',
