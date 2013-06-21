@@ -1,0 +1,341 @@
+From 7d5ee6df905c538d766a8dde74902be364862a05 Mon Sep 17 00:00:00 2001
+From: Jimmy Cuadra <jimmy@jimmycuadra.com>
+Date: Thu, 20 Jun 2013 21:08:46 -0700
+Subject: [PATCH] claire pls
+
+---
+ app/assets/javascripts/application.js   | 71 ++++++++++++++++++++++++++-------
+ app/assets/stylesheets/application.css  | 18 +++------
+ app/controllers/locations_controller.rb |  8 +---
+ app/controllers/maps_controller.rb      |  5 +++
+ app/views/layouts/application.html.erb  | 16 ++------
+ app/views/locations/map1.html.erb       | 38 ------------------
+ app/views/locations/map2.html.erb       |  0
+ app/views/maps/index.html.erb           | 18 +++++++++
+ config/routes.rb                        | 62 +---------------------------
+ movies,                                 |  0
+ show                                    |  0
+ 11 files changed, 90 insertions(+), 146 deletions(-)
+ create mode 100644 app/controllers/maps_controller.rb
+ delete mode 100644 app/views/locations/map1.html.erb
+ delete mode 100644 app/views/locations/map2.html.erb
+ create mode 100644 app/views/maps/index.html.erb
+ delete mode 100644 movies,
+ delete mode 100644 show
+
+diff --git a/app/assets/javascripts/application.js b/app/assets/javascripts/application.js
+index 9097d83..0d95e6c 100644
+--- a/app/assets/javascripts/application.js
++++ b/app/assets/javascripts/application.js
+@@ -1,15 +1,56 @@
+-// This is a manifest file that'll be compiled into application.js, which will include all the files
+-// listed below.
+-//
+-// Any JavaScript/Coffee file within this directory, lib/assets/javascripts, vendor/assets/javascripts,
+-// or vendor/assets/javascripts of plugins, if any, can be referenced here using a relative path.
+-//
+-// It's not advisable to add code directly here, but if you do, it'll appear at the bottom of the
+-// the compiled file.
+-//
+-// WARNING: THE FIRST BLANK LINE MARKS THE END OF WHAT'S TO BE PROCESSED, ANY BLANK LINE SHOULD
+-// GO AFTER THE REQUIRES BELOW.
+-//
+-//= require jquery
+-//= require jquery_ujs
+-//= require_tree .
++$(function () {
++  var defaultLatLng = new google.maps.LatLng(37.7750, -122.4183);
++
++  var map = window.map = new google.maps.Map(document.querySelector("#map-canvas"), {
++    center: defaultLatLng,
++    zoom: 15,
++    mapTypeId: google.maps.MapTypeId.ROADMAP
++  });
++
++  var markers = {};
++
++  google.maps.event.addListener(map, "bounds_changed", function () {
++    var bounds, marker;
++
++    bounds = map.getBounds();
++
++    if (!bounds) {
++      return;
++    }
++
++    locationData.forEach(function (location, index) {
++      if (!markers[location.id]) {
++        if (!location._latlng) {
++          location._latlng = new google.maps.LatLng(
++            location.latitude,
++            location.longitude
++          );
++        }
++
++        if (bounds.contains(location._latlng)) {
++          marker = markers[location.id] = new google.maps.Marker({
++            position: location._latlng,
++            map: map,
++            title: location.address
++          });
++        }
++      }
++    });
++  });
++
++  document.querySelector("form").addEventListener("submit", function (event) {
++    event.preventDefault();
++
++    var geocoder = new google.maps.Geocoder;
++
++    geocoder.geocode({ address:
++      document.querySelector("input").value
++    }, function (results, status) {
++      if (status == google.maps.GeocoderStatus.OK) {
++        map.setCenter(results[0].geometry.location);
++      } else {
++        console.error("Google geocoding failed, bitch.");
++      }
++    });
++  }, false);
++});
+diff --git a/app/assets/stylesheets/application.css b/app/assets/stylesheets/application.css
+index 3192ec8..5d85312 100644
+--- a/app/assets/stylesheets/application.css
++++ b/app/assets/stylesheets/application.css
+@@ -1,13 +1,5 @@
+-/*
+- * This is a manifest file that'll be compiled into application.css, which will include all the files
+- * listed below.
+- *
+- * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+- * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
+- *
+- * You're free to add application-wide styles to this file and they'll appear at the top of the
+- * compiled file, but it's generally better to create a new file per style scope.
+- *
+- *= require_self
+- *= require_tree .
+- */
++#map-canvas {
++  border: 1px solid black;
++  height: 300px;
++  width: 500px;
++}
+diff --git a/app/controllers/locations_controller.rb b/app/controllers/locations_controller.rb
+index 1fa14d2..0e2e2ea 100644
+--- a/app/controllers/locations_controller.rb
++++ b/app/controllers/locations_controller.rb
+@@ -2,7 +2,7 @@ class LocationsController < ApplicationController
+ 
+   def index
+     @locations = Location.all
+-    
++
+     respond_to do |format|
+       format.html # index.html.erb
+       format.json { render json: @locations }
+@@ -71,9 +71,3 @@ class LocationsController < ApplicationController
+     end
+   end
+ end
+-
+-def map1
+-end
+-
+-def map2
+-end
+diff --git a/app/controllers/maps_controller.rb b/app/controllers/maps_controller.rb
+new file mode 100644
+index 0000000..8e1dbd4
+--- /dev/null
++++ b/app/controllers/maps_controller.rb
+@@ -0,0 +1,5 @@
++class MapsController < ApplicationController
++  def index
++    @locations = Location.all
++  end
++end
+diff --git a/app/views/layouts/application.html.erb b/app/views/layouts/application.html.erb
+index c014b19..49bc945 100644
+--- a/app/views/layouts/application.html.erb
++++ b/app/views/layouts/application.html.erb
+@@ -2,20 +2,12 @@
+ <html>
+ <head>
+   <title>SF Movies</title>
+-  <%= stylesheet_link_tag    "application", :media => "all" %>
+-  <%= javascript_include_tag "application" %>
++  <%= stylesheet_link_tag "application" %>
+   <%= csrf_meta_tags %>
+-  <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.5/leaflet.css" />
+-  <script src="http://cdn.leafletjs.com/leaflet-0.5/leaflet.js"></script>
+ </head>
+ <body>
+-<%=link_to "Movies", movies_path%>
+-<%=link_to "Locations", locations_path%>
+-
+-
+-
+-<%= yield %>
+-<%= content_for :scripts %>
+-
++  <%=link_to "Movies", movies_path%>
++  <%=link_to "Locations", locations_path%>
++  <%= yield %>
+ </body>
+ </html>
+diff --git a/app/views/locations/map1.html.erb b/app/views/locations/map1.html.erb
+deleted file mode 100644
+index f8a6f87..0000000
+--- a/app/views/locations/map1.html.erb
++++ /dev/null
+@@ -1,38 +0,0 @@
+-<h1>Home#map1</h1>
+-<p>Find me in app/views/home/map1.html.erb</p>
+-
+-<%#= gmaps({
+-  "direction" => {
+-    "data" => {"from" => "San Francisco, CA", "to" => "Omaha, NE"}
+-  }
+-}) %>
+-
+-<%= gmaps({
+-    "map_options" => { "type" => "SATELLITE", "center_latitude" => 0, "center_longitude" => 180, "zoom" => 3, "auto_adjust" => true},
+-    "markers"     => { "data" => '[{ "description": "", "title": "", "lng": "5.9311119", "lat": "43.1251606", "picture": "", "width": "", "height": "" } ,{ "description": "", "title": "", "lng": "2.3509871", "lat": "48.8566667", "picture": "", "width": "", "height": "" } ]',
+-                                         },
+-    "polylines"   => { "data" => ' [ [
+-                         {"lng": -122.214897, "lat": 37.772323},
+-                         {"lng": -157.821856, "lat": 21.291982},
+-                         {"lng": 178.431, "lat": -18.142599},
+-                         {"lng": 153.027892, "lat": -27.46758}
+-                         ],
+-                         [
+-                         {"lng": -120.214897, "lat": 30.772323, "strokeColor": "#000", "strokeWeight" : 2 },
+-                         {"lng": -10.821856, "lat": 50.291982}
+-                         ] ]' },
+-     "polygons"    => { "data" => '[ [
+-                         {"lng": -80.190262, "lat": 25.774252},
+-                         {"lng": -66.118292, "lat": 18.466465},
+-                         {"lng": -64.75737, "lat": 32.321384}
+-                         ] ]' },
+-     "circles"     => { "data" => '[
+-                         {"lng": -122.214897, "lat": 37.772323, "radius": 1000000},
+-                         {"lng": 122.214897, "lat": 37.772323, "radius": 1000000, "strokeColor": "#FF0000"}
+-                         ]',
+-                                        },
+-     "direction"   => { "data"    => { "from" => "toulon, france", "to" => "paris, france"} ,
+-                        "options" => {"waypoints" => ["toulouse, france", "brest, france"], "travelMode" => "DRIVING", "display_panel" => true, "panel_id" => "instructions"}
+- }
+-    })
+-    %>
+\ No newline at end of file
+diff --git a/app/views/locations/map2.html.erb b/app/views/locations/map2.html.erb
+deleted file mode 100644
+index e69de29..0000000
+diff --git a/app/views/maps/index.html.erb b/app/views/maps/index.html.erb
+new file mode 100644
+index 0000000..525b8d3
+--- /dev/null
++++ b/app/views/maps/index.html.erb
+@@ -0,0 +1,18 @@
++<h1>Map of some shit</h1>
++
++<form>
++  <label>
++    Nigga, type yo ass an address up in this mothafuckin box.<br />
++    <input type="text" name="address" size="90" />
++  </label>
++</form>
++
++<br /><br />
++
++<div id="map-canvas"></div>
++
++<script>
++  var locationData = <%= @locations.to_json.html_safe %>;
++</script>
++
++<%= javascript_include_tag "//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js", "https://maps.googleapis.com/maps/api/js?key=AIzaSyDrCN9KO9IjWfxF2cQ69kievg03j4Mdyi0&sensor=false", "application" %>
+diff --git a/config/routes.rb b/config/routes.rb
+index 03ae68e..1792982 100644
+--- a/config/routes.rb
++++ b/config/routes.rb
+@@ -1,67 +1,7 @@
+ SfMovies::Application.routes.draw do
+-
+   resources :actors
+-  
+-  match '/movies/show', :controller => 'movies', :action => 'show'
+   resources :movies
+-
+-  match "/locations/map1" => "locations#map1"
+   resources :locations
+-
+-  # The priority is based upon order of creation:
+-  # first created -> highest priority.
+-
+-  # Sample of regular route:
+-  #   match 'products/:id' => 'catalog#view'
+-  # Keep in mind you can assign values other than :controller and :action
+-
+-  # Sample of named route:
+-  #   match 'products/:id/purchase' => 'catalog#purchase', :as => :purchase
+-  # This route can be invoked with purchase_url(:id => product.id)
+-
+-  # Sample resource route (maps HTTP verbs to controller actions automatically):
+-  #   resources :products
+-
+-  # Sample resource route with options:
+-  #   resources :products do
+-  #     member do
+-  #       get 'short'
+-  #       post 'toggle'
+-  #     end
+-  #
+-  #     collection do
+-  #       get 'sold'
+-  #     end
+-  #   end
+-
+-  # Sample resource route with sub-resources:
+-  #   resources :products do
+-  #     resources :comments, :sales
+-  #     resource :seller
+-  #   end
+-
+-  # Sample resource route with more complex sub-resources
+-  #   resources :products do
+-  #     resources :comments
+-  #     resources :sales do
+-  #       get 'recent', :on => :collection
+-  #     end
+-  #   end
+-
+-  # Sample resource route within a namespace:
+-  #   namespace :admin do
+-  #     # Directs /admin/products/* to Admin::ProductsController
+-  #     # (app/controllers/admin/products_controller.rb)
+-  #     resources :products
+-  #   end
+-
+-  # You can have the root of your site routed with "root"
+-  # just remember to delete public/index.html.
++  match "map" => "maps#index"
+   root :to => 'locations#index'
+-
+-  # See how all your routes lay out with "rake routes"
+-
+-  # This is a legacy wild controller route that's not recommended for RESTful applications.
+-  # Note: This route will make all actions in every controller accessible via GET requests.
+-  # match ':controller(/:action(/:id))(.:format)'
+ end
+diff --git a/movies, b/movies,
+deleted file mode 100644
+index e69de29..0000000
+diff --git a/show b/show
+deleted file mode 100644
+index e69de29..0000000
+-- 
+1.8.3.1
+

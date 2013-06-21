@@ -1,15 +1,56 @@
-// This is a manifest file that'll be compiled into application.js, which will include all the files
-// listed below.
-//
-// Any JavaScript/Coffee file within this directory, lib/assets/javascripts, vendor/assets/javascripts,
-// or vendor/assets/javascripts of plugins, if any, can be referenced here using a relative path.
-//
-// It's not advisable to add code directly here, but if you do, it'll appear at the bottom of the
-// the compiled file.
-//
-// WARNING: THE FIRST BLANK LINE MARKS THE END OF WHAT'S TO BE PROCESSED, ANY BLANK LINE SHOULD
-// GO AFTER THE REQUIRES BELOW.
-//
-//= require jquery
-//= require jquery_ujs
-//= require_tree .
+$(function () {
+  var defaultLatLng = new google.maps.LatLng(37.7750, -122.4183);
+
+  var map = window.map = new google.maps.Map(document.querySelector("#map-canvas"), {
+    center: defaultLatLng,
+    zoom: 15,
+    mapTypeId: google.maps.MapTypeId.ROADMAP
+  });
+
+  var markers = {};
+
+  google.maps.event.addListener(map, "bounds_changed", function () {
+    var bounds, marker;
+
+    bounds = map.getBounds();
+
+    if (!bounds) {
+      return;
+    }
+
+    locationData.forEach(function (location, index) {
+      if (!markers[location.id]) {
+        if (!location._latlng) {
+          location._latlng = new google.maps.LatLng(
+            location.latitude,
+            location.longitude
+          );
+        }
+
+        if (bounds.contains(location._latlng)) {
+          marker = markers[location.id] = new google.maps.Marker({
+            position: location._latlng,
+            map: map,
+            title: location.address
+          });
+        }
+      }
+    });
+  });
+
+  document.querySelector("form").addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    var geocoder = new google.maps.Geocoder;
+
+    geocoder.geocode({ address:
+      document.querySelector("input").value
+    }, function (results, status) {
+      if (status == google.maps.GeocoderStatus.OK) {
+        map.setCenter(results[0].geometry.location);
+      } else {
+        console.error("Google geocoding failed, fool!");
+      }
+    });
+  }, false);
+});

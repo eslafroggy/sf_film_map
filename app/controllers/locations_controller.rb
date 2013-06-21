@@ -2,7 +2,7 @@ class LocationsController < ApplicationController
 
   def index
     @locations = Location.all
-    
+
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @locations }
@@ -70,10 +70,4 @@ class LocationsController < ApplicationController
       format.json { head :no_content }
     end
   end
-end
-
-def map1
-end
-
-def map2
 end
