@@ -1,0 +1,18 @@
+<p>
+  <b>Movie:</b>
+  <%= @movie.movie_title %>
+</p>
+
+<p>
+  <b>Released Year:</b>
+  <%= @movie.release_year %>
+</p>
+
+<p>
+  <b>Director:</b>
+  <%= @movie.director%>
+</p>
+
+<%= link_to 'Edit', edit_movie_path(@movie) %> |
+<%= link_to 'Back', movie_path %>
+

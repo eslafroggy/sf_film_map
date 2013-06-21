@@ -1,5 +1,12 @@
 <h1>Listing locations</h1>
 
+<% form_tag locations_path do %>
+<p>
+  <%= text_field_tag :search %>
+  <%= submit_tag "Search Location" %>
+</p>
+<% end %>
+
 <table>
   <tr>
     <th>Address</th>

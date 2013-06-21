@@ -1,2 +1,29 @@
 <h1>Movies#index</h1>
 <p>Find me in app/views/movies/index.html.erb</p>
+<h1>Listing Movies</h1>
+
+<table>
+  <tr>
+    <th>Movie Title</th>
+    <th>Released Year</th>
+    <th>Director</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @movies.each do |movie| %>
+  <tr>
+    <td><%= movie.movie_title %></td>
+    <td><%= movie.release_year %></td>
+    <td><%= movie.director %></td>
+    <td><%= link_to 'Show', movie_path(movie) %></td>
+    <td><%= link_to 'Edit', edit_movie_path(movie) %></td>
+    
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Location', new_location_path %>
