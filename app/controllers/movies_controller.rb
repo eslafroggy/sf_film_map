@@ -42,6 +42,10 @@ class MoviesController < ApplicationController
   end
 
 
+  def edit
+    @movie = Movie.find(params[:id])
+  end
+
   def create
     @movie = Movie.new(params[:movie])
 
@@ -54,10 +58,6 @@ class MoviesController < ApplicationController
         format.json { render json: @movie.errors, status: :unprocessable_entity }
       end
     end
-  end
-
-  def edit
-    @movie = Movie.find(params[:id])
   end
 
   def update

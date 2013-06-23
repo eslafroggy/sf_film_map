@@ -1,7 +1,3 @@
-<h1>Movies#new</h1>
-<p>Find me in app/views/movies/new.html.erb</p>
-<h1>Add Movie</h1>
-
 <%= form_for(@movie) do |f| %>
   <% if @movie.errors.any? %>
     <div id="error_explanation">
@@ -17,17 +13,9 @@
 
   <div class="field">
     <%= f.label :movie_title %><br />
-    <%= f.text_field :movie_title %> 
-    <%= f.label :release_year %><br />
-    <%= f.text_field :release_year %>
-    <%= f.label :director %><br />
-    <%= f.text_field :director %>
-
-
+    <%= f.text_field :movie_title %>
   </div>
   <div class="actions">
     <%= f.submit %>
   </div>
 <% end %>
-
-<%= link_to 'Back', movies_path %>
