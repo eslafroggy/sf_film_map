@@ -1,18 +1,31 @@
-<p>
-  <b>Movie:</b>
+<div class="poster">
+<img src="<%=@result.poster%>"/>
+</div>
+
+<div id="movie_title">
   <%= @movie.movie_title %>
-</p>
+</div>
 
-<p>
-  <b>Released Year:</b>
+<div class="movie-details">
+	<span>Plot:</span>
+	<%= @result.plot %>
+
+  <span>Released Year:</span>
   <%= @movie.release_year %>
-</p>
 
-<p>
-  <b>Director:</b>
+  <span>Director:</span>
   <%= @movie.director%>
-</p>
 
-<%= link_to 'Edit', edit_movie_path(@movie) %> |
-<%= link_to 'Back', movie_path %>
+  <span>Actors</span>
+  <%= @result.actors.join(', ') %>
+
+  <span>Genre:</span>
+  <%= @result.genres.join(',') %>
+</div>
+
+	
+
+
+
+<%= link_to 'Back', map_path %>
 

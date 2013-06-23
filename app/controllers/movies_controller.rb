@@ -8,7 +8,11 @@ class MoviesController < ApplicationController
   end
 
   def show
+
     @movie = Movie.find(params[:id])
+    @result=Movies.find_by_title(@movie.movie_title, {
+      y:@movie.release_year
+    })
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @movie }
