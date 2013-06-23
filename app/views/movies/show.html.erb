@@ -7,19 +7,19 @@
 </div>
 
 <div class="movie-details">
-	<span>Plot:</span>
+	<div>Plot:</div>
 	<%= @result.plot %>
 
-  <span>Released Year:</span>
-  <%= @movie.release_year %>
+  <div>Released Date:</div>
+  <%= @result.year %>
 
-  <span>Director:</span>
+  <div>Director:</div>
   <%= @movie.director%>
 
-  <span>Actors</span>
+  <div>Actors</div>
   <%= @result.actors.join(', ') %>
 
-  <span>Genre:</span>
+  <div>Genre:</div>
   <%= @result.genres.join(',') %>
 </div>
 
