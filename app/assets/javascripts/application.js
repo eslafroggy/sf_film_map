@@ -3,13 +3,13 @@ $(function () {
   google.maps.visualRefresh = true;
   var map = window.map = new google.maps.Map(document.querySelector("#map-canvas"), {
     center: defaultLatLng,
-    zoom: 15,
+    zoom: 13,
     mapTypeId: google.maps.MapTypeId.ROADMAP
   });
 
   var markers = {};
 
-  var infowindow= new google.maps.InfoWindow();
+  var infowindow= new google.maps.InfoWindow({maxWidth:300});
 
   google.maps.event.addListener(map, "bounds_changed", function () {
     var bounds, marker;
@@ -43,10 +43,19 @@ $(function () {
 
   function addClickListener(marker,currentLocation) {
     google.maps.event.addListener(marker, 'click', function() {
-      infowindow.setContent(movieData[currentLocation.movie_id].movie_title);
+      var infoWindowhtml = '<a href="/movies/' + currentLocation.movie_id + '">' + movieData[currentLocation.movie_id].movie_title + '</a><br />';
+
+      if (currentLocation.fun_fact) {
+        infoWindowhtml += 'Fun Fact:' + currentLocation.fun_fact;
+      }
+      infowindow.setContent(infoWindowhtml);
       infowindow.open(map,marker);
     });
+
   }
+
+  
+
 
   document.querySelector("form").addEventListener("submit", function (event) {
     event.preventDefault();

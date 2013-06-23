@@ -12,7 +12,7 @@
     <th>Address</th>
     <th>Latitude</th>
     <th>Longitude</th>
-    <th></th>
+    <th>Fun Facts</th>
     <th></th>
     <th></th>
   </tr>
@@ -22,6 +22,7 @@
     <td><%= location.address %></td>
     <td><%= location.latitude %></td>
     <td><%= location.longitude %></td>
+    <td><%= location.fun_fact %></td>
     <td><%= link_to 'Show', location_path(location) %></td>
     <td><%= link_to 'Edit', edit_location_path(location) %></td>
     <td><%= link_to 'Delete', locations_path, method: :delete, data: { confirm: 'Are you sure?' } %></td>
