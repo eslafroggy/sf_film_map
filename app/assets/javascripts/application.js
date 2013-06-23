@@ -43,7 +43,7 @@ $(function () {
 
   function addClickListener(marker,currentLocation) {
     google.maps.event.addListener(marker, 'click', function() {
-      infowindow.setContent(currentLocation.address);
+      infowindow.setContent(movieData[currentLocation.movie_id].movie_title);
       infowindow.open(map,marker);
     });
   }

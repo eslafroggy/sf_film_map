@@ -13,6 +13,7 @@
 
 <script>
   var locationData = <%= @locations.to_json.html_safe %>;
+  var movieData = <%= @movies.to_json.html_safe %>;
 </script>
 
 <%= javascript_include_tag "//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js", "https://maps.googleapis.com/maps/api/js?key=AIzaSyDrCN9KO9IjWfxF2cQ69kievg03j4Mdyi0&sensor=false", "application" %>
