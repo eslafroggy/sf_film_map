@@ -4,4 +4,7 @@ SfMovies::Application.routes.draw do
   resources :locations
   match "map" => "maps#index"
   root :to => 'maps#index'
+  match "about" => "about#show"
+  root :to => 'about#show'
+
 end

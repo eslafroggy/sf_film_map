@@ -1,0 +1,39 @@
+body {
+  background-image:url('http://s3.amazonaws.com/auteurs_production/post_images/1744/4-star-screen.jpg?1285711328');
+	background-position: center;
+	background-attachment: fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	color: #FFFFFF;
+	font-family: Verdana;
+	font-size: 18px;
+}
+
+nav {
+	display:block;
+	font-size: 20px;
+	margin-right:30px;
+	text-align:left;
+	border:10px solid transparent;
+	border-image: url(button.png) 0 14 0 14 stretch;
+}
+.navbar-inner {
+	background: #C0C0C0;
+	-webkit-border-radius:0;
+	-moz-webkit-border-radius:0;
+	border-radius:0;
+}
+
+.container {
+	text-align: center;
+	margin:0 400px; padding:10px;
+	width:450px;
+	border:5px solid gray;
+	background:#000000;
+	color:#FFFFFF;
+	font-family: 'Noto Sans', sans-serif;
+	font-size: 18px;
+	opacity: 0.7;
+}

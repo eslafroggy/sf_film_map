@@ -4,5 +4,5 @@ class CreatingLocationsMoviesBridge < ActiveRecord::Migration
      t.integer :location_id
      t.integer :movie_id
    end
- end
+  end
 end
