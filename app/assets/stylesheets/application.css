@@ -1,5 +1,11 @@
-#map-canvas {
+#map-canvas.index {
   border: 1px solid black;
   height: 500px;
   width: 100%;
+}
+
+#map-canvas.movie {
+  border: 1px solid black;
+  height: 400px;
+  width: 50%;
 }

@@ -10,6 +10,19 @@ class MoviesController < ApplicationController
   def show
 
     @movie = Movie.find(params[:id])
+
+    @locations = []
+    @movie.locations.each do|currentLocation|
+      @locations.push({
+        :id => currentLocation.id,
+        :movie_id  => currentLocation.movies[0].id,
+        :latitude => currentLocation.latitude,
+        :longitude => currentLocation.longitude,
+        :address => currentLocation.address,
+        :fun_fact => currentLocation.fun_fact
+      });
+    end
+
     @result=Movies.find_by_title(@movie.movie_title, {
       y:@movie.release_year
     })

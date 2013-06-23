@@ -23,7 +23,26 @@
   <%= @result.genres.join(',') %>
 </div>
 
-	
+
+<div id="map-canvas" class="movie"></div>
+
+<table>
+  <tr>
+    <th>Address</th>
+  </tr>
+
+<% @movie.locations.each do |location| %>
+  <tr>
+    <td><%= location.address %></td>
+  </tr>
+<% end %>
+</table>
+
+<script>
+  var locationData = <%= @locations.to_json.html_safe %>;
+</script>
+
+<%= javascript_include_tag "//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js", "https://maps.googleapis.com/maps/api/js?key=AIzaSyDrCN9KO9IjWfxF2cQ69kievg03j4Mdyi0&sensor=false", "movie_map" %>
 
 
 
