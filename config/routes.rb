@@ -3,5 +3,5 @@ SfMovies::Application.routes.draw do
   resources :movies
   resources :locations
   match "map" => "maps#index"
-  root :to => 'locations#index'
+  root :to => 'maps#index'
 end

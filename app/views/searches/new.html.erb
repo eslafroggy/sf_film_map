@@ -1,0 +1,9 @@
+<h1> Search </h1>
+<%= form_for @search do |f| %>
+	<div class= "field">
+		<%= f.label :movies_title %></br>
+		<%= f.text_field :movies_title %>
+	</div>
+
+<div class="actions"><%= f.submit "Search" %></div>
+<% end %>

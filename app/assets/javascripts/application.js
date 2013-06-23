@@ -1,6 +1,6 @@
 $(function () {
   var defaultLatLng = new google.maps.LatLng(37.7750, -122.4183);
-
+  google.maps.visualRefresh = true;
   var map = window.map = new google.maps.Map(document.querySelector("#map-canvas"), {
     center: defaultLatLng,
     zoom: 15,
@@ -8,6 +8,8 @@ $(function () {
   });
 
   var markers = {};
+
+  var infowindow= new google.maps.InfoWindow();
 
   google.maps.event.addListener(map, "bounds_changed", function () {
     var bounds, marker;
@@ -33,10 +35,18 @@ $(function () {
             map: map,
             title: location.address
           });
+          addClickListener(marker,location);
         }
       }
     });
   });
+
+  function addClickListener(marker,currentLocation) {
+    google.maps.event.addListener(marker, 'click', function() {
+      infowindow.setContent(currentLocation.address);
+      infowindow.open(map,marker);
+    });
+  }
 
   document.querySelector("form").addEventListener("submit", function (event) {
     event.preventDefault();
