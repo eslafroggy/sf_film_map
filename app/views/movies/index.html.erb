@@ -1,6 +1,7 @@
-<h1>Listing Movies</h1>
-<%= link_to 'New Movie', new_movie_path %>
-<table>
+<h1>Listing of Movies Filmed in San Francisco</h1>
+<%= link_to 'Add New Movie', new_movie_path %>
+<div class="list">
+<table class="table">
   <tr>
     <th>Movie Title</th>
     <th>Released Year</th>
@@ -21,6 +22,6 @@
   </tr>
 <% end %>
 </table>
-
+</div>
 <br />
 
