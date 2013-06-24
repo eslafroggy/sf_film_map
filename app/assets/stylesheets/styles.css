@@ -2,11 +2,13 @@ body {
   background-image:url('http://s3.amazonaws.com/auteurs_production/post_images/1744/4-star-screen.jpg?1285711328');
 	background-position: center;
 	background-attachment: fixed;
+	opacity: 0.8;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
 	background-size: cover;
 	color: #FFFFFF;
+	margin:80px;
 	font-family: Verdana;
 	font-size: 18px;
 }
@@ -21,6 +23,7 @@ nav {
 }
 .navbar-inner {
 	background: #C0C0C0;
+	font: #000000;
 	-webkit-border-radius:0;
 	-moz-webkit-border-radius:0;
 	border-radius:0;
@@ -28,7 +31,7 @@ nav {
 
 .container {
 	text-align: center;
-	margin:0 400px; padding:10px;
+	margin:0 300px; padding:10px;
 	width:450px;
 	border:5px solid gray;
 	background:#000000;

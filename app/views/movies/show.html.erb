@@ -3,24 +3,29 @@
 </div>
 
 <div id="movie_title">
-  <%= @movie.movie_title %>
+ <%= @movie.movie_title %>
 </div>
-
+<br>
 <div class="movie-details">
+	<br>
 	<div>Plot:</div>
 	<%= @result.plot %>
-
+    <br>
+    <br>
   <div>Released Date:</div>
   <%= @result.year %>
-
+  <br>
+  <br>
   <div>Director:</div>
   <%= @movie.director%>
-
+ <br>
+ <br>  
   <div>Actors</div>
   <%= @result.actors.join(', ') %>
-
+  <br>
+  <br>
   <div>Genre:</div>
-  <%= @result.genres.join(',') %>
+  <%= @result.genres.join(', ') %>
 </div>
 
 
