@@ -49,3 +49,9 @@ width: 700px;
 .movie-subtitle{
 	font-weight: bold;
 }
+
+.logo{
+	margin-left: 20px;
+	width:150px;
+	height:50px;
+}
