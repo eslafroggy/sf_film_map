@@ -1,5 +1,12 @@
 source 'https://rubygems.org'
 
+# This instructs Heroku to use Ruby 1.9.3, which is what we've been using
+# in class. Without the specification, Heroku assumes Ruby 2.0, which can be
+# too new. That is, sometimes it's so new that gem developers (like the
+# developer of the 'movies' gem) haven't had a chance to update their gem's
+# code to be compatible yet.
+ruby "1.9.3"
+
 gem 'rails', '3.2.13'
 
 # Bundle edge Rails instead:
