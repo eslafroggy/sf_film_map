@@ -20,6 +20,7 @@ class LocationsController < ApplicationController
 
   def new
     @location = Location.new
+    @movie_id = params[:movie_id]
 
     respond_to do |format|
       format.html # new.html.erb

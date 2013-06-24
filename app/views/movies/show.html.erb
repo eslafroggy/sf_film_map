@@ -48,7 +48,7 @@
 
 <%= javascript_include_tag "//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js", "https://maps.googleapis.com/maps/api/js?key=AIzaSyDrCN9KO9IjWfxF2cQ69kievg03j4Mdyi0&sensor=false", "movie_map" %>
 
-<%= link_to 'New Location', new_location_path %>
+<%= link_to 'New Location', new_movie_location_path(@movie) %>
 
 <%= link_to 'Back', map_path %>
 
